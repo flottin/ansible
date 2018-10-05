@@ -18,9 +18,29 @@
       - git
       - apache2
       - curl
+      - apt-transport-https
+      - lsb-release
+      - ca-certificates
 
   - name: Start
     become: yes
     service: name=apache2 state=started enabled=true
 
+  - name: dotdeb
+    become: yes
+    apt_repository: repo='{{ item }}'
+    with_items:
+      - deb https://packages.sury.org/php/ stretch main
+
+  - name: ajout key
+    become: yes
+    apt_key: url=https://packages.sury.org/php/apt.gpg
+
+  - name: update
+    become: yes
+    apt: update_cache=yes
+
+  - name: install
+    become: yes
+    apt: name=php7.2
 ...
