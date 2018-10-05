@@ -1,0 +1,26 @@
+---
+
+# launch playbook
+#  ansible-playbook -i hosts playbook.yml --ask-pass
+
+
+- hosts: web
+  remote_user: flo
+  become: yes
+
+  tasks:
+  - name: installation
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - vim
+      - htop
+      - zsh
+      - git
+      - apache2
+      - curl
+
+  - name: Start
+    become: yes
+    service: name=apache2 state=started enabled=true
+
+...
