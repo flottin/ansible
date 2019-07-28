@@ -16,11 +16,14 @@
                'curl',
                'net-tools',
                'php7.2-fpm',
-               'php7.2'
+               'php7.2',
+               'libapache2-mod-php'
         ]
-    - name: Start
-      become: yes
-      service: name=apache2 state=started enabled=true
+
+    - name: Restart service httpd, in all cases
+      service:
+        name: apache2
+        state: restarted
 
 - hosts: database
   remote_user: root
@@ -30,6 +33,15 @@
     - name: installation
       apt:
         update_cache: yes
-        name: ['aptitude',
-               'vim'
+        name: [
+          'aptitude',
+          'vim',
+          'mariadb-server',
+          'mycli',
+          'mytop','htop',
+          'curl'
         ]
+    - name: Restart service mariadb, in all cases
+      service:
+        name: mysql
+        state: restarted
