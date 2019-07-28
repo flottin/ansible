@@ -1,2 +1,5 @@
 [web]
-127.0.0.1
+127.0.0.1:23 ansible_ssh_private_key_file=.ssh/id_rsa
+localhost ansible_ssh_private_key_file=.ssh/id_rsa
+[database]
+localhost:3306 ansible_ssh_private_key_file=.ssh/id_rsa
