@@ -3,22 +3,40 @@
 - hosts: web
   remote_user: root
   become: yes
+  environment:
+    MY_ENV_VARIABLE: whatever_value
 
   tasks:
-    - name: installation
-      apt:
-        update_cache: yes
-        name: ['aptitude',
-               'vim',
-               'htop',
-               'nmap',
-               'apache2',
-               'curl',
-               'net-tools',
-               'php7.2-fpm',
-               'php7.2',
-               'libapache2-mod-php'
-        ]
+#    - name: installation
+#      apt:
+#        #update_cache: yes
+#        name: [
+#          'aptitude',
+#               'vim',
+#               'htop',
+#               'nmap',
+#               'apache2',
+#               'curl',
+#               'net-tools',
+#               'php7.2-fpm',
+#               'php7.2',
+#               'libapache2-mod-php'
+#        ]
+
+    - name: Remove a file, if present
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: Copy vars
+      copy:
+        src: etc/apache2/conf-enabled/vars.conf
+        dest: /etc/apache2/conf-enabled/vars.conf
+
+    - name: Copy index.php
+      copy:
+        src: var/www/html/index.php
+        dest: /var/www/html/index.php
 
     - name: Restart service httpd, in all cases
       service:
