@@ -1,10 +1,11 @@
 FROM ubuntu:19.04
 
-RUN apt-get update && apt-get install -y openssh-server vim
+RUN apt-get update && apt-get install -y openssh-server vim python
 RUN mkdir /var/run/sshd
-RUN echo 'root:Bb451mx674' | chpasswd
+RUN echo 'root:bb' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN mkdir /var/run/sshd; chmod 755 /var/run/sshd
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN chmod 755 /var/run/sshd
 RUN mkdir /root/.ssh; chown root. /root/.ssh; chmod 700 /root/.ssh
 RUN ssh-keygen -A
 ADD .ssh/id_rsa.pub /root/.ssh/authorized_keys
@@ -14,5 +15,5 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-EXPOSE 22 80 3306
+EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
