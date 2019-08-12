@@ -1,4 +1,4 @@
 ---
-#- import_playbook: playbook-php.yml
+- import_playbook: playbook-php.yml
 #- import_playbook: playbook-db.yml
-- import_playbook: playbook-tomcat.yml
+#- import_playbook: playbook-tomcat.yml

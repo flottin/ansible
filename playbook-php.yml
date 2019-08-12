@@ -12,15 +12,17 @@
         #update_cache: yes
         name: [
           'aptitude',
-               'vim',
-               'htop',
-               'nmap',
-               'apache2',
-               'curl',
-               'net-tools',
-               'php7.2-fpm',
-               'php7.2',
-               'libapache2-mod-php'
+           'vim',
+           'htop',
+           'nmap',
+           'apache2',
+           'curl',
+           'net-tools',
+           'php7.2-fpm',
+           'php7.2',
+           'libapache2-mod-php',
+           'redis-server',
+
         ]
 
     - name: Remove a file, if present
@@ -42,3 +44,19 @@
       service:
         name: apache2
         state: restarted
+
+    - name: Restart service redis, in all cases
+      service:
+        name: redis-server
+        state: restarted
+
+    - name: Recursively change ownership of a directory
+      file:
+        path: /var/www/html
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+
+    - name: Run
+      command: curl localhost
