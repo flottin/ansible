@@ -5,23 +5,23 @@
   become: yes
 
   tasks:
-#    - name: installation
-#      apt:
-#        update_cache: yes
-#        name: [
-#          'aptitude',
-#          'vim',
-#          'curl',
-#          'maven',
-#          'openjdk-8-jdk',
-#          'tomcat9',
-#          'tomcat9-examples',
-#
-#        ]
-#    - name: Restart service tomcat9, in all cases
-#      service:
-#        name: tomcat9
-#        state: restarted
+    - name: installation
+      apt:
+        update_cache: yes
+        name: [
+          'aptitude',
+          'vim',
+          'curl',
+          'maven',
+          'openjdk-8-jdk',
+          'tomcat9',
+          'tomcat9-examples',
+
+        ]
+    - name: Restart service tomcat9, in all cases
+      service:
+        name: tomcat9
+        state: restarted
 
     - name: Copy Hello.java
       copy:

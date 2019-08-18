@@ -21,8 +21,6 @@
            'php7.2-fpm',
            'php7.2',
            'libapache2-mod-php',
-           'redis-server',
-
         ]
 
     - name: Remove a file, if present
@@ -35,19 +33,9 @@
         src: etc/apache2/conf-enabled/vars.conf
         dest: /etc/apache2/conf-enabled/vars.conf
 
-    - name: Copy index.php
-      copy:
-        src: var/www/html/index.php
-        dest: /var/www/html/index.php
-
     - name: Restart service httpd, in all cases
       service:
         name: apache2
-        state: restarted
-
-    - name: Restart service redis, in all cases
-      service:
-        name: redis-server
         state: restarted
 
     - name: Recursively change ownership of a directory
