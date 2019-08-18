@@ -21,6 +21,7 @@
            'php7.2-fpm',
            'php7.2',
            'libapache2-mod-php',
+           'mycli'
         ]
 
     - name: Remove a file, if present
@@ -40,7 +41,7 @@
 
     - name: Recursively change ownership of a directory
       file:
-        path: /var/www/html
+        path: /var/www
         state: directory
         recurse: yes
         owner: www-data

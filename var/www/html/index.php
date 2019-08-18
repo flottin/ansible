@@ -15,7 +15,12 @@
 </html>
 
 <?php
-file_put_contents('data.txt', 'all datas');
+$path = "../data";
+$pathData = $path . '/data-json.txt';
+if (!file_exists($path)){
+    mkdir($path);
+}
+
 
 $config = [
     'module1' => [
@@ -32,7 +37,7 @@ $config = [
         'param4' => 'val 4',
     ]
 ];
-file_put_contents('data-json.txt', json_encode($config) );
+file_put_contents($pathData, json_encode($config) );
 
 $separatorSize = 120;
 echo '<pre>';
@@ -56,7 +61,7 @@ echo "Config";
 echo "<br>\n";
 echo str_repeat('-', $separatorSize);
 echo "<br>\n";
-var_dump(json_decode(file_get_contents('data-json.txt')));
+var_dump(json_decode(file_get_contents($pathData)));
 echo "<br>\n";
 echo str_repeat('-', $separatorSize);
 echo "<br>\n";
