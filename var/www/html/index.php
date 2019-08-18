@@ -4,11 +4,11 @@
     html{
         font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-        color: gray;
+        color: darkslateblue;
     }
     span{
         font-weight: bold;
-        color: darkgoldenrod;
+        color: darkslategray;
     }
 
 </style>

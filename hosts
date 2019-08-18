@@ -1,6 +1,6 @@
 [web]
-web2 ansible_ssh_host=localhost ansible_ssh_port=22 ansible_ssh_private_key_file=.ssh/id_rsa
-web3 ansible_ssh_host=localhost ansible_ssh_port=23 ansible_ssh_private_key_file=.ssh/id_rsa
+web1 ansible_ssh_host=localhost ansible_ssh_port=2281 ansible_ssh_private_key_file=.ssh/id_rsa
+web2 ansible_ssh_host=localhost ansible_ssh_port=2282 ansible_ssh_private_key_file=.ssh/id_rsa
 
 [database]
 db1 ansible_ssh_host=localhost ansible_ssh_port=24 ansible_ssh_private_key_file=.ssh/id_rsa
