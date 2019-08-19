@@ -20,8 +20,14 @@
            'net-tools',
            'php7.2-fpm',
            'php7.2',
+           'php7.2-mysql',
+           'php7.2-cli',
+           'php-xdebug',
            'libapache2-mod-php',
-           'mycli'
+           'mycli',
+           'mysql-client',
+           'composer',
+           'git'
         ]
 
     - name: Remove a file, if present
@@ -34,10 +40,11 @@
         src: etc/apache2/conf-enabled/vars.conf
         dest: /etc/apache2/conf-enabled/vars.conf
 
-    - name: Copy bashrc
+    - name: Copy php.ini
       copy:
-        src: root/.bashrc
-        dest: /root/.bashrc
+        src: etc/php/7.2/fpm/php.ini
+        dest: /etc/php/7.2/fpm/php.ini
+
 
     - name: Restart service httpd, in all cases
       service:

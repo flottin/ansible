@@ -1,20 +1,18 @@
-<html>
-<style>
-
-    html{
-        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-
-        color: darkslateblue;
-    }
-    span{
-        font-weight: bold;
-        color: darkslategray;
-    }
-
-</style>
-</html>
-
 <?php
+
+// bdd
+$dsn = 'mysql:host=172.17.0.1';
+$user = 'root';
+$password = 'bb';
+
+try {
+    $dbh = new PDO($dsn, $user, $password);
+    $_SERVER['MYSQL_PDO'] = 'OK';
+} catch (PDOException $e) {
+    $_SERVER['MYSQL_PDO'] = 'ERROR : Connexion échouée : ' . $e->getMessage();
+}
+
+// datas
 $path = "../data";
 $pathData = $path . '/data-json.txt';
 if (!file_exists($path)){
@@ -38,36 +36,30 @@ $config = [
     ]
 ];
 file_put_contents($pathData, json_encode($config) );
-
-$separatorSize = 120;
-echo '<pre>';
-echo "\n";
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-echo '<span>Deploy with ansible : ' . $_SERVER['HTTP_HOST'] . '</span>';
-echo "<br>\n";
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-foreach($_SERVER as $k => $v)
-{
-    if (strstr($k, 'APP_')){
-        echo "$k : $v";
-        echo "<br>\n";
-    }
+$_SERVER['PATH_DATA'] = 'ERROR';
+if (file_exists($pathData)){
+    $_SERVER['PATH_DATA'] = realpath($pathData);
 }
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-echo "Config";
-echo "<br>\n";
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-var_dump(json_decode(file_get_contents($pathData)));
-echo "<br>\n";
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-echo "Global Variables";
-echo "<br>\n";
-echo str_repeat('-', $separatorSize);
-echo "<br>\n";
-var_dump($_SERVER);
-var_dump($_ENV);
+
+// display
+$style = '<style>html{color: #2e303e; background-color: #EAEAEA}</style>';
+$pre = '<pre>';
+$sep = '<br>';
+if (strstr($_SERVER['HTTP_USER_AGENT'], 'curl')){
+    $pre = '';
+    $sep = "\n";
+    $style = '';
+}
+
+$out = $pre;
+foreach ($_SERVER as $key => $val){
+    $out .=  '   ';
+    $out .=  str_pad($key, 40);
+    $out .=  ' | ';
+    $out .=  trim(str_replace("<address>", "", $val));
+    $out .= $sep;
+
+
+}
+echo $out;
+echo $style;

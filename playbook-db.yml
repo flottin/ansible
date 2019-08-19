@@ -13,10 +13,26 @@
           'vim',
           'mysql-server',
           'mycli',
-          'mytop','htop',
-          'curl'
+          'mytop',
+          'htop',
+          'curl',
+          'htop',
+          'net-tools',
+          'mysql-client'
         ]
+
+    - name: Copy cnf
+      copy:
+        src: etc/mysql/mysql.conf.d/mysqld.cnf
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
     - name: Restart service mariadb, in all cases
       service:
         name: mysql
         state: restarted
+
+    - name: change root password
+      command:  mysql -e " UPDATE  mysql.user set host = '%'  WHERE user = 'root'; flush privileges ;"
+
+    - name: change root password
+      command:  mysql -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'bb';"
