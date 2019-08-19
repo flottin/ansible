@@ -42,6 +42,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 
-VOLUME [ "/sys/fs/cgroup" ]
+VOLUME [ "/sys/fs/cgroup", "/tmp", "/run", "/run/lock" ]
 
 CMD ["/lib/systemd/systemd"]
