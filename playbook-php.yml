@@ -12,23 +12,23 @@
         #update_cache: yes
         name: [
           'aptitude',
-           'vim',
-           'htop',
-           'nmap',
-           'apache2',
-           'curl',
-           'net-tools',
-           'php7.2-fpm',
-           'php7.2',
-           'php7.2-mysql',
+          'vim',
+          'htop',
+          'nmap',
+          'apache2',
+          'curl',
+          'net-tools',
+          'php7.2-fpm',
+          'php7.2',
+          'php7.2-mysql',
           'php7.2-cli',
           'php7.2-curl',
-           'php-xdebug',
-           'libapache2-mod-php',
-           'mycli',
-           'mysql-client',
-           'composer',
-           'git'
+          'php-xdebug',
+          'libapache2-mod-php',
+          'mycli',
+          'mysql-client',
+          'composer',
+          'git'
         ]
 
     - name: Remove a file, if present
@@ -40,6 +40,34 @@
       copy:
         src: etc/apache2/conf-enabled/vars.conf
         dest: /etc/apache2/conf-enabled/vars.conf
+
+    - name: Copy vars
+      copy:
+        src: etc/apache2/sites-available/default-ssl.conf
+        dest: /etc/apache2/sites-available/default-ssl.conf
+
+    - name: Copy crt
+      copy:
+        src: etc/ssl/certs/server.crt
+        dest: /etc/ssl/certs/server.crt
+
+    - name: Copy key
+      copy:
+        src: etc/ssl/certs/server.key
+        dest: /etc/ssl/certs/server.key
+
+    - name: Copy crt
+      copy:
+        src: etc/ssl/certs/localhost.pem
+        dest: /etc/ssl/certs/localhost.pem
+
+    - name: Copy key
+      copy:
+        src: etc/ssl/certs/localhost-key.pem
+        dest: /etc/ssl/certs/localhost-key.pem
+
+    - name: install mods
+      apache2_module: state=present name=ssl
 
     - name: Copy php.ini
       copy:

@@ -272,16 +272,16 @@ function head($str, $sep){
     return $out;
 }
 
-$out .= head("Server Variables", $sep);
-foreach ($_SERVER as $key => $val){
-    $out .=  '   | ';
-    $out .=  str_pad($key, 30);
-    $out .=  ' | ';
-    $out .=  trim(str_replace("<address>", "", $val));
-    $out .= $sep;
-
-
-}
+//$out .= head("Server Variables", $sep);
+//foreach ($_SERVER as $key => $val){
+//    $out .=  '   | ';
+//    $out .=  str_pad($key, 30);
+//    $out .=  ' | ';
+//    $out .=  trim(str_replace("<address>", "", $val));
+//    $out .= $sep;
+//
+//
+//}
 $out .= $style;
 
 $out .= $sep;
