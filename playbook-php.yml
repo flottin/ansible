@@ -28,13 +28,40 @@
           'mycli',
           'mysql-client',
           'composer',
-          'git'
+          'git',
+          'libnss3-tools'
         ]
+
+#    - name: Run
+#      command: wget https://github.com/FiloSottile/mkcert/releases/download/v1.1.2/mkcert-v1.1.2-linux-amd64
+#
+#
+#    - name: Run
+#      command: mv mkcert-v1.1.2-linux-amd64 mkcert
+#
+#
+#    - name: Run
+#      command: chmod +x mkcert
+#
+#
+#    - name: Run
+#      command: cp mkcert /usr/local/bin/
+#
+#    - name: Run
+#      command: mkcert -install
+
+
 
     - name: Remove a file, if present
       file:
         path: /var/www/html/index.html
         state: absent
+#
+#    - name: Copy certificate script
+#      copy:
+#        src: usr/local/bin/generate-certificate.sh
+#        dest: /usr/local/bin/generate-certificate.sh
+
 
     - name: Copy vars
       copy:
@@ -46,15 +73,6 @@
         src: etc/apache2/sites-available/default-ssl.conf
         dest: /etc/apache2/sites-available/default-ssl.conf
 
-    - name: Copy crt
-      copy:
-        src: etc/ssl/certs/server.crt
-        dest: /etc/ssl/certs/server.crt
-
-    - name: Copy key
-      copy:
-        src: etc/ssl/certs/server.key
-        dest: /etc/ssl/certs/server.key
 
     - name: Copy crt
       copy:
@@ -74,6 +92,10 @@
         src: etc/php/7.2/fpm/php.ini
         dest: /etc/php/7.2/fpm/php.ini
 
+    - name: Enable default SSL virtualhost
+      become: yes
+      command: "a2ensite default-ssl"
+
 
     - name: Restart service httpd, in all cases
       service:
@@ -87,6 +109,12 @@
         recurse: yes
         owner: www-data
         group: www-data
+
+    - name: Composer install
+      composer:
+        command: install
+        working_dir: /var/www/html
+
 
     - name: Run
       command: curl localhost
