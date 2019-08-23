@@ -33,6 +33,8 @@
 
     - name: change root password
       command:  mysql -e " UPDATE  mysql.user set host = '%'  WHERE user = 'root'; flush privileges ;"
+      ignore_errors: yes
 
     - name: change root password
       command:  mysql -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'bb';"
+      ignore_errors: yes

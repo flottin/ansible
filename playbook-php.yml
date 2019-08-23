@@ -28,8 +28,7 @@
           'mycli',
           'mysql-client',
           'composer',
-          'git',
-          'libnss3-tools'
+          'git'
         ]
 
 #    - name: Run

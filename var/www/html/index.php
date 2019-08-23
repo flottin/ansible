@@ -228,7 +228,7 @@ $res [] = (new ProbeSpace('Tmp'))->isSpaceEnough();
 
 
 // display
-$bul =  "\u{2B24} ";
+$bul =  "\u{02055} ";
 $redBullet =  "<span class=red>" . $bul . "</span>";
 $greenBullet =  "<span class=green>" . $bul . "</span>";
 

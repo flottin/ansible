@@ -19,14 +19,10 @@ docker exec -it web1 systemctl start sshd
 ## launch ansible playbook
 ```
 #generate cert
-#install mkcert
-mkcert -install
-mkcert localhost
-mv localhost-key.pem localhost.pem etc/ssl/certs
-
+bin/mkcert -install
+bin/mkcert localhost
+mv localhost*.pem etc/ssl/certs/
 ```
-
-
 
 ## launch ansible playbook
 ```
