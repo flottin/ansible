@@ -37,6 +37,11 @@ ADD .ssh/id_rsa.pub /root/.ssh/authorized_keys
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
+RUN sed -i 's/Restart=on-failure/Restart=always/' /lib/systemd/system/ssh.service
+RUN ln -s  /lib/systemd/system/ssh.service /etc/systemd/system/multi-user.target.wants/ssh.service
+
+
+
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
