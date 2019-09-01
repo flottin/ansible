@@ -25,25 +25,17 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/plymouth* \
     /lib/systemd/system/systemd-update-utmp*
 
-
+COPY root/.bashrc /root/
 RUN mkdir /var/run/sshd
-RUN echo 'root:bb' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 RUN chmod 755 /var/run/sshd
 RUN mkdir /root/.ssh; chown root. /root/.ssh; chmod 700 /root/.ssh
-RUN ssh-keygen -A
 ADD .ssh/id_rsa.pub /root/.ssh/authorized_keys
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-
 RUN sed -i 's/Restart=on-failure/Restart=always/' /lib/systemd/system/ssh.service
 RUN ln -s  /lib/systemd/system/ssh.service /etc/systemd/system/multi-user.target.wants/ssh.service
-
-
-
-ENV NOTVISIBLE "in users profile"
-RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 
