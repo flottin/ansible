@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN sed -i 's/# deb/deb/g' /etc/apt/sources.list
 
+# install ssh + sytemd + python
 RUN apt-get update \
     && apt-get install -y systemd \
     && apt-get install -y openssh-server vim python \
