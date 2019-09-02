@@ -1,5 +1,10 @@
 # ansible in docker containers
 
+## generate key pair
+```
+yes y | ssh-keygen -t rsa -b 4096  -f .ssh/id_rsa -N '' > /dev/null
+```
+
 ## build image
 ```
 docker build -t system_d .
@@ -16,7 +21,7 @@ docker exec -it web1 systemctl start sshd
  
 ```
 
-## launch ansible playbook
+## ssl local generate
 ```
 #generate cert
 bin/mkcert -install
@@ -29,8 +34,22 @@ mv localhost*.pem etc/ssl/certs/
 ansible-playbook -i hosts playbook.yml 
 ```
 
-
 ## go in docker via ssh 
 ```
 ssh -i .ssh/id_rsa root@localhost -p 2281
+```
+
+## when done export container as image
+```
+docker export web1 | gzip > web1.tar.gz
+```
+
+## import container as image
+```
+zcat < web1.tar.gz | docker import - system_d
+```
+
+## run with docker-compose
+```
+docker-compose up -d
 ```

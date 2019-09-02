@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web1:
+    image: 'system_d:latest'
+    container_name: 'web1'
+    hostname: 'web1'
+    build: .
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "2281:22"
+      - "8081:80"
+    volumes:
+      - ./var/www/html:/var/www/html
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    command:
+      - /lib/systemd/systemd
