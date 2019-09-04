@@ -9,7 +9,7 @@
   tasks:
     - name: installation
       apt:
-        #update_cache: yes
+        update_cache: yes
         name: [
           'aptitude',
           'vim',
@@ -108,12 +108,6 @@
         recurse: yes
         owner: www-data
         group: www-data
-
-    - name: Composer install
-      composer:
-        command: install
-        working_dir: /var/www/html
-
 
     - name: Run
       command: curl localhost

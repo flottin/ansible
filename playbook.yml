@@ -2,13 +2,3 @@
 - import_playbook: playbook-php.yml
 #- import_playbook: playbook-db.yml
 #- import_playbook: playbook-tomcat.yml
-
-
-- hosts: all
-  remote_user: root
-  become: yes
-  tasks:
-    - name: Copy bashrc
-      copy:
-        src: root/.bashrc
-        dest: /root/.bashrc

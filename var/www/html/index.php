@@ -131,7 +131,7 @@ class ProbeMysql extends Probe{
     public function run(){
         parent::setName(__CLASS__);
         // bdd
-        $dsn = 'mysql:host=172.17.0.1';
+        $dsn = 'mysql:host=localhost';
         $user = 'root';
         $password = 'bb';
         $status = false;

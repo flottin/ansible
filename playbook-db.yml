@@ -7,11 +7,10 @@
   tasks:
     - name: installation
       apt:
-        update_cache: yes
+        #update_cache: yes
         name: [
           'aptitude',
           'vim',
-          'mysql-server',
           'mycli',
           'mytop',
           'htop',
@@ -21,10 +20,8 @@
           'mysql-client'
         ]
 
-    - name: Copy cnf
-      copy:
-        src: etc/mysql/mysql.conf.d/mysqld.cnf
-        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    - name: Install mariadb-server
+      command: apt install -y mariadb-server
 
     - name: Restart service mariadb, in all cases
       service:
@@ -37,4 +34,8 @@
 
     - name: change root password
       command:  mysql -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'bb';"
+      ignore_errors: yes
+
+    - name: change root password
+      command:  mysql -e " GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'bb' WITH GRANT OPTION;"
       ignore_errors: yes
